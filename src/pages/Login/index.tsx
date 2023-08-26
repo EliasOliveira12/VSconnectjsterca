@@ -35,7 +35,16 @@ function Login() {
 
                 secureLocalStorage.setItem("user",response.data)
 
-                navigate("/perfil" + response.data.id)
+                navigate("/perfil/" + response.data.user.id)
+
+
+                // recarrega a pagina
+
+                navigate(0)
+
+
+
+
 
                 
 

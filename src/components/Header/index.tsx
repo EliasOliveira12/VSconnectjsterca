@@ -1,10 +1,30 @@
 import "./style.css"
 import Logo from "../../assets/img/logo.svg"
+import { Link } from "react-router-dom";
+
+import { useEffect, useState } from "react";
+
+import secureLocalStorage from "react-secure-storage";
 
 
 function Header(){
 
+    const[usuarioLogado, setUsuarioLogado] = useState<any>("")
+
+    useEffect(()=>{
+        verificarUsuarioLogado()
+
+    },[])
+    function verificarUsuarioLogado(){
+
+        if (secureLocalStorage.getItem("user")){
+            
+            setUsuarioLogado(secureLocalStorage.getItem("user"))
+        }
+    }
     function mostrarMenu() {
+
+       
         let menu = document.getElementById("menu_links") as HTMLCanvasElement // Obtém o elemento do menu pelo ID
         let sombra: any = document.getElementById("sombra"); // Obtém o elemento da sombra pelo ID
         let menu_barras: any = document.getElementById("menu_barras"); // Obtém o elemento do botão do menu pelo ID
@@ -62,9 +82,20 @@ function Header(){
                             <path d="M352 96l64 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0c53 0 96-43 96-96l0-256c0-53-43-96-96-96l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32zm-9.4 182.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L242.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z" />
                         </svg>
                     </a>
-                    <a className="header_botao_login" href="../Login/index.html">
+                    {/* <a className="header_botao_login" href="../Login/index.html">
                         login
-                    </a>
+                    </a> */}
+
+                    {
+                        // condicao? caso true : caso false 
+                        usuarioLogado ?
+                             <span style={{color: "white"}}>Ola,{ usuarioLogado.user.nome.split(" ")[0]}</span>
+                        :
+                             <Link to={"/login"} className= "header_bota o_login">login</Link>
+                          
+                    }
+
+                    
                 </nav>
             </div>
         </header>
